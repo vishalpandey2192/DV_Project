@@ -103,7 +103,7 @@ class Map {
                         var stateData = self.data[i]
                         var tooltip_data = {
                             "state": stateData["RegionName"],
-                            "price": stateData["PRICE/FT."],
+                            "price": stateData["PRICE/SQ. FT."],
                             "population": stateData["POPULATION"],
                             "unemployement": stateData["UNEMPLOYMENT_RATE"],
                             "salary": stateData["AVERAGE_SALARY/MON"],
@@ -172,7 +172,7 @@ class Map {
             return 'POPULATION'
         }
         if (value == 'price') {
-            return 'PRICE/FT.'
+            return 'PRICE/SQ. FT.'
         }
         if (value == 'mortality') {
             return 'MORTALITY_RATE'
@@ -185,10 +185,10 @@ class Map {
         var text = "<h5>" + tooltip_data.state + "</h5>";
         text += "<ul>"
         text += "<li> <strong>Population:</strong> " + tooltip_data.population + "</li>"
-        text += "<li> <strong> Price per foot:</strong> " + tooltip_data.price + "</li>"
-        text += "<li> <strong>Mortality Rate:</strong> " + tooltip_data.mortality + "</li>"
-        text += "<li> <strong>Average Salary:</strong> " + tooltip_data.salary + "</li>"
-        text += "<li> <strong>Unemployement Rate:</strong> " + tooltip_data.unemployement + "</li>"
+        text += "<li> <strong>Rental Cost ($/sq. ft.) :</strong> " + tooltip_data.price + "</li>"
+        text += "<li> <strong>Mortality Rate (%) : </strong> " + tooltip_data.mortality + "</li>"
+        text += "<li> <strong>Average Salary ($) :</strong> " + tooltip_data.salary + "</li>"
+        text += "<li> <strong>Unemployement Rate (%) :</strong> " + tooltip_data.unemployement + "</li>"
         text += "</ul>";
 
         return text;
