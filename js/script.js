@@ -8,7 +8,7 @@ d3.csv("2016_us_states_data.csv", function(error, allData) {
         d['UNEMPLOYMENT_RATE'] = +d['UNEMPLOYMENT_RATE'];
         d['AVERAGE_SALARY/MON'] = +d['AVERAGE_SALARY/MON'];
         d['MORTALITY_RATE'] = +d['MORTALITY_RATE'];
-        d['PRICE/FT.'] = +d['PRICE/FT.'];
+        d['PRICE/SQ. FT.'] = +d['PRICE/SQ. FT.'];
     });
 
     usaMap = new Map(allData);
@@ -64,17 +64,17 @@ function createTableForClickedState(selectedState) {
     cell = document.createElement("td");
     cell.setAttribute("class", "bold");
 
-    cellText = document.createTextNode("Price Per sq. foot ($/foot.)");
+    cellText = document.createTextNode("Rental Price($/sq. ft.)");
     cell.appendChild(cellText);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellText = document.createTextNode(selectedState["PRICE/FT."]);
+    cellText = document.createTextNode(selectedState["PRICE/SQ. FT."]);
     cell.appendChild(cellText);
     row.appendChild(cell);
 
     cell = document.createElement("td");
-    cellText = document.createTextNode(selectedState["NA PRICE/FT."]);
+    cellText = document.createTextNode(selectedState["NA PRICE/SQ. FT."]);
     cell.appendChild(cellText);
     row.appendChild(cell);
 

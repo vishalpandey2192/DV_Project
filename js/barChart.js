@@ -110,7 +110,7 @@ class BarChart {
 
         var legend = d3.select("#nationalAvgLegend").append("svg")
             .attr("class", "legend")
-            .attr("width", 180)
+            .attr("width", 200)
             .attr("height", 30)
             .selectAll("g")
             .data('b')
@@ -134,7 +134,7 @@ class BarChart {
         } else if (selectedDimension == 'salary') {
             national_avg_val = '$' + this.data[0]['NA ' + value]
         } else if (selectedDimension == 'price') {
-            national_avg_val = '$' + this.data[0]['NA ' + value] + '/foot'
+            national_avg_val = '$' + this.data[0]['NA ' + value] + '/sq. feet'
         }
 
         legend.append("text")
@@ -210,7 +210,6 @@ class BarChart {
             });
     }
 
-
     highlightState(stateName) {
         d3.select("#bar-chart").selectAll("rect").classed("highlight-class", false)
         var element = d3.select("#" + stateName)
@@ -229,7 +228,7 @@ class BarChart {
             return 'POPULATION'
         }
         if (value == 'price') {
-            return 'PRICE/FT.'
+            return 'PRICE/SQ. FT.'
         }
         if (value == 'mortality') {
             return 'MORTALITY_RATE'
