@@ -79,5 +79,83 @@
     <div class="col-sm-12" id="legend">
     </div>
 </div>
+
+<div class="row">
+    <div class="col-sm-5" id="userInputTable">
+        <h2>Basic Table</h2>
+        <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Factors</th>
+                <th>Input Your Ranking</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1.</td>
+                <td>Unemployement Rate</td>
+                <td><input type="text" class="form-control" id="unemployement"></td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>Population</td>
+                <td><input type="text" class="form-control" id="population"></td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>Average Salary</td>
+                <td><input type="text" class="form-control" id="salary"></td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td>Rental Cost</td>
+                <td><input type="text" class="form-control" id="rental"></td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td>Mortality Rate</td>
+                <td><input type="text" class="form-control" id="mortality"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-success" onclick="getTopStates()">Give my top states</button>
+    </div>
+    <div class="col-sm-6" id="infoPanel" style="display:none;">
+        <h2>Top 3 recommended states</h2>
+        <div class="row" >
+            <div class="col-sm-12">
+                <h4 id="state1"></h4>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Apple</button>
+                    <button type="button" class="btn btn-primary">Samsung</button>
+                    <button type="button" class="btn btn-primary">Sony</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-12">
+                <h4 id="state2"></h4>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Apple</button>
+                    <button type="button" class="btn btn-primary">Samsung</button>
+                    <button type="button" class="btn btn-primary">Sony</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-12">
+                <h4 id="state3"></h4>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Apple</button>
+                    <button type="button" class="btn btn-primary">Samsung</button>
+                    <button type="button" class="btn btn-primary">Sony</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

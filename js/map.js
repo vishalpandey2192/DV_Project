@@ -67,6 +67,9 @@ class Map {
             .data(this.statesJson.features)
             .enter()
             .append("path")
+            .attr("id",function(d){
+                return "id_"+d.properties.name
+            })
             .attr("d", this.path)
             .style("stroke", "#fff")
             .style("stroke-width", "1")
@@ -192,5 +195,14 @@ class Map {
         text += "</ul>";
 
         return text;
+    }
+
+    highlightMap(arr){
+        for(i=0;i<arr.length;i++) {
+            d3.select("#map-view").classed("highlight-class", false)
+            var element = d3.select("#id_" + arr[i])
+            element.classed("highlight-class", true)
+            console.log(arr[i])
+        }
     }
 }

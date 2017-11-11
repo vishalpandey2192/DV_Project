@@ -108,7 +108,7 @@ rect:hover {
     text-transform: capitalize;
 }
 .highlight-class{
-    fill:#a9a19e;
+    fill:#a9a19e !important;
     color: aqua;
 }
 
@@ -120,4 +120,8 @@ rect:hover {
 
 .bold{
     font-weight: bold;
+}
+
+#userInputTable{
+    margin-left: 40px;
 }
