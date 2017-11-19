@@ -205,4 +205,62 @@ class Map {
             console.log(arr[i])
         }
     }
+
+    displayWeights(val,obj){
+        var element = d3.select("#"+obj)
+        // val[0]= val[0]*10
+        val[1]= val[1]*2
+        val[2] = val[2]/1000000
+        val[3]=val[3]/5000
+        val[4]=val[4]*5
+        val[5]=val[5]*5
+        var chart = element.selectAll("rect")
+            .data(val);
+
+        var col = "rgb(217,91,67)"
+        var yMin = d3.min(this.data, function(d) {
+            return val[1];
+        })
+        var yMax = d3.max(this.data, function(d) {
+            return val[val.length-1];
+        })
+
+        var color = d3.scaleLinear()
+            .domain([yMin, yMax])
+            .range([d3.rgb(col).brighter(), d3.rgb(col).darker()]);
+
+        chart.exit().attr("opacity", 0.5)
+            .transition()
+            .duration(1000)
+            .attr("opacity", 0)
+            .remove();
+
+        chart = chart.enter().append("rect")
+            .merge(chart);
+
+        chart.transition()
+            .duration(2000)
+            .attr("x", function (d,i) {
+
+                if(i==0){
+                    return 5;
+                }else{
+                    var v=5
+                    for( var j=0;j<i;j++){
+                        v= v+ val[j]
+                    }
+                    return v
+                }
+
+            })
+            .attr("width", function(d,i){
+                    return d;
+            })
+            .attr("y", 5)
+            .attr("height", 15)
+            .attr("fill", function(d) {
+                    return color(d)
+            })
+
+    }
 }

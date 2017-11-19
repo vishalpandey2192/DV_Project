@@ -10,62 +10,64 @@
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
     <script type="text/javascript" src="js/barChart.js"></script>
+    <script type="text/javascript" src="js/lineChart.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-<div class="row" style="text-align: center">
-    <!--<h2>-->
+<div>
+    <div class="row" style="text-align: center">
+        <!--<h2>-->
         <!--Neighborhood Analysis & Recommendation using Visualizations in D3-->
-    <!--</h2>-->
-    <h2>
-        US States Analysis & Recommender using Visualizations in D3
-    </h2>
-    <HR>
+        <!--</h2>-->
+        <h2>
+            US States Analysis & Recommender using Visualizations in D3
+        </h2>
+        <HR>
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>
+                    Tanveen Singh Bharaj
+                </h4>
+                <h5>
+                    U1126027
+                </h5>
+                <h6>
+                    tanveen.bharaj@utah.edu
+                </h6>
+            </div>
+            <div class="col-sm-6">
+                <h4>
+                    Vishal Pandey
+                </h4>
+                <h5>
+                    U1126029
+                </h5>
+                <h6>
+                    vishal.pandey@utah.edu
+                </h6>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class = "row">
+        <div class="col-sm-12 center-align form-group">
+            <label for="dataset" style="font-size: 20px">Select the factor to visualize</label>
+            <select class="form-control" id="dataset" onchange="updateMap(value)" style="width: 25%;margin: auto">
+                <option selected value="unemployement">UNEMPLOYEMENT_RATE</option>
+                <option value="population">POPULATION</option>
+                <option value="salary">AVERAGE_SALARY/MON</option>
+                <option value="price">RENTAL COST [PRICE/SQ. FT.]</option>
+                <option value="mortality">MORTALITY_RATE</option>
+            </select>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-sm-6">
-            <h4>
-                Tanveen Singh Bharaj
-            </h4>
-            <h5>
-                U1126027
-            </h5>
-            <h6>
-                tanveen.bharaj@utah.edu
-            </h6>
+        <div  class="col-sm-7 pull-left" id="map-view">
         </div>
-        <div class="col-sm-6">
-            <h4>
-                Vishal Pandey
-            </h4>
-            <h5>
-                U1126029
-            </h5>
-            <h6>
-                vishal.pandey@utah.edu
-            </h6>
+        <div id="bar-chart" class="col-sm-5 pull-left">
+            <div id="average"></div>
         </div>
     </div>
-</div>
-<hr>
-<div class = "row">
-    <div class="col-sm-12 center-align form-group">
-        <label for="dataset" style="font-size: 20px">Select the factor to visualize</label>
-        <select class="form-control" id="dataset" onchange="updateMap(value)" style="width: 25%;margin: auto">
-            <option selected value="unemployement">UNEMPLOYEMENT_RATE</option>
-            <option value="population">POPULATION</option>
-            <option value="salary">AVERAGE_SALARY/MON</option>
-            <option value="price">RENTAL COST [PRICE/SQ. FT.]</option>
-            <option value="mortality">MORTALITY_RATE</option>
-        </select>
-    </div>
-</div>
-<div class="row">
-    <div  class="col-sm-7 pull-left" id="map-view">
-    </div>
-    <div id="bar-chart" class="col-sm-5 pull-left">
-        <div id="average"></div>
-    </div>
-</div>
 </div>
 <div class="row">
     <div class="col-sm-12" id="table">
@@ -79,7 +81,6 @@
     <div class="col-sm-12" id="legend">
     </div>
 </div>
-
 <div class="row">
     <div class="col-sm-5" id="userInputTable">
         <h2>Basic Table</h2>
@@ -120,42 +121,115 @@
             </tr>
             </tbody>
         </table>
-
         <button type="button" class="btn btn-success" onclick="getTopStates()">Give my top states</button>
     </div>
     <div class="col-sm-6" id="infoPanel" style="display:none;">
         <h2>Top 3 recommended states</h2>
         <div class="row" >
-            <div class="col-sm-12">
-                <h4 id="state1"></h4>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Apple</button>
-                    <button type="button" class="btn btn-primary">Samsung</button>
-                    <button type="button" class="btn btn-primary">Sony</button>
+            <div class="row" >
+                <div class="col-sm-3">
+                    <h4 id="state1"></h4>
+                </div>
+                <div class="col-sm-9">
+                    <svg id="weight1" height="20px" width="600"></svg>
+                </div>
+                <!--<div class="col-sm-5">-->
+                    <!--<svg id="rank1" height="20px" width="150px"></svg>-->
+                <!--</div>-->
+            </div>
+            <div class="row" >
+                <div class="col-sm-12">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('unemployement')">Unemployement Rate</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('population')">Population</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('salary')">Average Salary</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('rental')">Rental Cost</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('mortality')">Mortality</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row" >
-            <div class="col-sm-12">
-                <h4 id="state2"></h4>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Apple</button>
-                    <button type="button" class="btn btn-primary">Samsung</button>
-                    <button type="button" class="btn btn-primary">Sony</button>
+            <div class="row" >
+                <div class="col-sm-3">
+                    <h4 id="state2"></h4>
+                </div>
+                <div class="col-sm-9">
+                    <svg id="weight2" height="20px" width="600"></svg>
+                </div>
+                <!--<div class="col-sm-5">-->
+                    <!--<svg id="rank2" height="20px" width="150px"></svg>-->
+                <!--</div>-->
+            </div>
+            <div class="row" >
+                <div class="col-sm-12">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm">Unemployement Rate</button>
+                        <button type="button" class="btn btn-primary btn-sm">Population</button>
+                        <button type="button" class="btn btn-primary btn-sm">Average Salary</button>
+                        <button type="button" class="btn btn-primary btn-sm">Rental Cost</button>
+                        <button type="button" class="btn btn-primary btn-sm">Mortality</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row" >
-            <div class="col-sm-12">
-                <h4 id="state3"></h4>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Apple</button>
-                    <button type="button" class="btn btn-primary">Samsung</button>
-                    <button type="button" class="btn btn-primary">Sony</button>
+            <div class="row" >
+                <div class="col-sm-3">
+                    <h4 id="state3"></h4>
                 </div>
+                <div class="col-sm-9" >
+                    <svg id="weight3" height="20px" width="600"></svg>
+                </div>
+                <!--<div class="col-sm-5">-->
+                    <!--<svg id="rank3" height="20px" width="150px"></svg>-->
+                <!--</div>-->
             </div>
+                <div class="row" >
+                    <div class="col-sm-12" >
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm">Unemployement Rate</button>
+                            <button type="button" class="btn btn-primary btn-sm">Population</button>
+                            <button type="button" class="btn btn-primary btn-sm">Average Salary</button>
+                            <button type="button" class="btn btn-primary btn-sm">Rental Cost</button>
+                            <button type="button" class="btn btn-primary btn-sm">Mortality</button>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
+
 </div>
+
+<div class="row">
+    <div class="col-sm-4" id="unemployement-line-chart">
+
+    </div>
+
+    <div class="col-sm-4" id="population-line-chart">
+
+    </div>
+
+    <div class="col-sm-4" id="salary-line-chart">
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-4" id="rental-line-chart">
+
+    </div>
+
+    <div class="col-sm-4" id="mortality-line-chart">
+
+    </div>
+
+    <div class="col-sm-4">
+
+    </div>
+
+</div>
+
 </body>
 </html>
