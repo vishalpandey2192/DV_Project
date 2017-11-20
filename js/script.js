@@ -708,5 +708,5 @@ function drawLineChart() {
     }else{
         line = new LineChart(option, mor_arr);
     }
-    line.update()
+    line.update(topStates)
 }

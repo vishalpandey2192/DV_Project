@@ -125,3 +125,22 @@ rect:hover {
 #userInputTable{
     margin-left: 40px;
 }
+
+.axis path {
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-family: Lato;
+    font-size: 13px;
+}
+
+/*!* basic positioning *!*/
+/*.legend { list-style: none; }*/
+/*.legend li { float: left; margin-right: 10px; }*/
+/*.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px;}*/
+/*!* your colors *!*/
+/*.legend .state1 { background-color: green; }*/
+/*.legend .state2 { background-color: blue; }*/
+/*.legend .state3 { background-color: red; }*/
