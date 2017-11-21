@@ -68,6 +68,10 @@ body {
     fill: black;
 }
 
+.chart text.paramter {
+    fill: black;
+}
+
 .chart text.name {
     fill: #000;
 }

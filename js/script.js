@@ -589,6 +589,7 @@ function getTopStates(){
                     statesDataArr[i][6] = parseFloat((data[i]["MORTALITY_RATE"]*mortality.value))
 
                 }
+                var labels=["Aggregated Sum of Weights","Unemployement Rate","Population","Average Salary/Mon","Price per sq.ft.","Mortality Rate"]
                 statesDataArr.sort(function(a, b){return b[1] - a[1]});
 
                 for(i=0;i<statesDataArr.length;i++){
@@ -606,9 +607,9 @@ function getTopStates(){
                 document.getElementById("state1").innerHTML="1. "+statesDataArr[0][0]
                 document.getElementById("state2").innerHTML="2. "+statesDataArr[1][0]
                 document.getElementById("state3").innerHTML="3. "+statesDataArr[2][0]
-                usaMap.displayWeights(arr_state1,'weight1')
-                usaMap.displayWeights(arr_state2,'weight2')
-                usaMap.displayWeights(arr_state3,'weight3')
+                usaMap.displayWeights(arr_state1,'weight1',labels)
+                usaMap.displayWeights(arr_state2,'weight2',labels)
+                usaMap.displayWeights(arr_state3,'weight3',labels)
 
                 usaMap.highlightMap(topStates)
 

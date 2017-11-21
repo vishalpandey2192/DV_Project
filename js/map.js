@@ -206,9 +206,11 @@ class Map {
         }
     }
 
-    displayWeights(val,obj){
+    displayWeights(val,obj,labels){
         var element = d3.select("#"+obj)
-        // val[0]= val[0]*10
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip-title")
+            .style("opacity", 0);
         val[1]= val[1]*2
         val[2] = val[2]/1000000
         val[3]=val[3]/5000
@@ -260,6 +262,33 @@ class Map {
             .attr("height", 15)
             .attr("fill", function(d) {
                     return color(d)
+            })
+        element.selectAll("rect").on("mouseout", function(d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0);
+                // d3.select(this)
+                //     .style("fill",self.colors_arr[index])
+                //     .attr("r",self.radius)
+            })
+            .on("mouseover", function(d,i) {
+                // d3.select(this)
+                //     .style("fill","orange")
+                //     .attr("r",self.radius*2)
+                // var coordinates = [0, 0];
+                // coordinates = d3.mouse(this);
+                // var x = coordinates[0];
+                // var y = coordinates[1];
+                var tooltip_data = {
+                    "label": labels[i],
+                }
+               // var body = self.tooltip_render(tooltip_data)
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html("<h5>" + tooltip_data.label + "</h5>")
+                tooltip.style("left", (d3.event.pageX) + "px")
+                tooltip.style("top", (d3.event.pageY) + "px");
             })
 
     }
