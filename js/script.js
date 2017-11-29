@@ -425,6 +425,159 @@ function clearFields() {
     document.getElementById('rental').value=''
     document.getElementById('rental').innerHTML=''
 }
+function getTopStates(){
+    document.getElementById("infoPanel").style.display="block"
+    var unemployement=document.getElementById('unemployement')
+    var mortality=document.getElementById('mortality')
+    var salary=document.getElementById('salary')
+    var rental=document.getElementById('rental')
+    var population=document.getElementById('population')
+    if(unemployement && mortality && salary && rental && population) {
+        if (unemployement.value != '' && mortality.value != '' && salary.value != '' &&
+            rental.value != '' && population.value != '') {
+            if(checkRange(unemployement.value)&&checkRange(mortality.value)&&checkRange(salary.value)
+                &&checkRange(rental.value)&&checkRange(population.value)){
+
+                var statesDataArr= new Array()
+                for(i=0;i<data.length;i++){
+                    statesDataArr[i]=new Array();
+                    statesDataArr[i][0]=data[i]["RegionName"]
+                    // data[i]["POPULATION"]=1
+                    var calculatedVal= (parseFloat(data[i]["UNEMPLOYMENT_RATE"]*unemployement.value))+
+                        parseFloat((data[i]["POPULATION"]*population.value))+
+                        parseFloat((data[i]["AVERAGE_SALARY/MON"]*rental.value))+
+                        parseFloat((data[i]["PRICE/SQ. FT."]*salary.value))+
+                        parseFloat((data[i]["MORTALITY_RATE"]*mortality.value))
+                    statesDataArr[i][1] = calculatedVal
+                    statesDataArr[i][2] = parseFloat(data[i]["UNEMPLOYMENT_RATE"]*unemployement.value)
+                    statesDataArr[i][3] = parseFloat((data[i]["POPULATION"]*population.value))
+                    statesDataArr[i][4] = parseFloat((data[i]["AVERAGE_SALARY/MON"]*rental.value))
+                    statesDataArr[i][5] = parseFloat((data[i]["PRICE/SQ. FT."]*salary.value))
+                    statesDataArr[i][6] = parseFloat((data[i]["MORTALITY_RATE"]*mortality.value))
+
+                }
+                var labels=["Aggregated Sum of Weights","Unemployement Rate","Population","Average Salary/Mon","Price per sq.ft.","Mortality Rate"]
+                statesDataArr.sort(function(a, b){return b[1] - a[1]});
+
+                for(i=0;i<statesDataArr.length;i++){
+                    statesDataArr[i][1] =  statesDataArr[i][1]/statesDataArr[statesDataArr.length-1][1]
+                }
+                topStates=[statesDataArr[0][0],statesDataArr[1][0],statesDataArr[2][0]]
+                var arr_state1=[ statesDataArr[0][1],statesDataArr[0][2],statesDataArr[0][3],statesDataArr[0][4],statesDataArr[0][5]
+                    ,statesDataArr[0][6] ]
+                var arr_state2=[statesDataArr[1][1],statesDataArr[1][2],statesDataArr[1][3],statesDataArr[1][4],statesDataArr[1][5]
+                    ,statesDataArr[1][6]]
+                var arr_state3=[statesDataArr[2][1],statesDataArr[2][2],statesDataArr[2][3],statesDataArr[2][4],statesDataArr[2][5]
+                    ,statesDataArr[2][6] ]
+
+
+                document.getElementById("state1").innerHTML="1. "+statesDataArr[0][0]
+                document.getElementById("state2").innerHTML="2. "+statesDataArr[1][0]
+                document.getElementById("state3").innerHTML="3. "+statesDataArr[2][0]
+                usaMap.displayWeights(arr_state1,'weight1',labels)
+                usaMap.displayWeights(arr_state2,'weight2',labels)
+                usaMap.displayWeights(arr_state3,'weight3',labels)
+
+                usaMap.highlightMap(topStates)
+
+            }
+        }
+    }
+    clearFields()
+}
+
+function checkRange(value){
+    if(value>=1 && value <= 5){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+var option
+function plotLineChart(parameter){
+    option = parameter
+    employmentData =[];
+    populationData=[];
+    mortalityData=[];
+    rentalData=[];
+    salaryData=[];
+    index=0;
+    get2016Data()
+
+    // }
+}
+
+function drawLineChart() {
+    var unemp_arr = new Array();
+
+    for(var i=0;i<topStates.length;i++){
+        unemp_arr[i] = new Array()
+        unemp_arr[i].state=topStates[i];
+        unemp_arr[i].values = new Array();
+        for(var j=0;j<employmentData.length;j++){
+            unemp_arr[i]['values'][j]=employmentData[j]['data'][i]
+        }
+    }
+
+    var pop_arr = new Array();
+
+    for(var i=0;i<topStates.length;i++){
+        pop_arr[i] = new Array()
+        pop_arr[i].state=topStates[i];
+        pop_arr[i].values = new Array();
+        for(var j=0;j<populationData.length;j++){
+            pop_arr[i]['values'][j]=populationData[j]['data'][i]
+        }
+    }
+
+    var sal_arr = new Array();
+
+    for(var i=0;i<topStates.length;i++){
+        sal_arr[i] = new Array()
+        sal_arr[i].state=topStates[i];
+        sal_arr[i].values = new Array();
+        for(var j=0;j<salaryData.length;j++){
+            sal_arr[i]['values'][j]=salaryData[j]['data'][i]
+        }
+    }
+
+    var rent_arr = new Array();
+
+    for(var i=0;i<topStates.length;i++){
+        rent_arr[i] = new Array()
+        rent_arr[i].state=topStates[i];
+        rent_arr[i].values = new Array();
+        for(var j=0;j<rentalData.length;j++){
+            rent_arr[i]['values'][j]=rentalData[j]['data'][i]
+        }
+    }
+
+    var mor_arr = new Array();
+
+    for(var i=0;i<topStates.length;i++){
+        mor_arr[i] = new Array()
+        mor_arr[i].state=topStates[i];
+        mor_arr[i].values = new Array();
+        for(var j=0;j<mortalityData.length;j++){
+            mor_arr[i]['values'][j]=mortalityData[j]['data'][i]
+        }
+    }
+
+    var line
+    if(option=="unemployement") {
+        line = new LineChart(option, unemp_arr);
+    }else if(option=="population"){
+        line = new LineChart(option, pop_arr);
+    }else if(option=="salary"){
+        line = new LineChart(option, sal_arr);
+    }else if(option=="rental"){
+        line = new LineChart(option, rent_arr);
+    }else{
+        line = new LineChart(option, mor_arr);
+    }
+    line.update(topStates)
+}
 
 function createTableForClickedState(selectedState) {
     var body = document.getElementById("table");
@@ -558,156 +711,3 @@ function createTableForClickedState(selectedState) {
     tbl.setAttribute("class", "table-class table")
 }
 
-function getTopStates(){
-    document.getElementById("infoPanel").style.display="block"
-    var unemployement=document.getElementById('unemployement')
-    var mortality=document.getElementById('mortality')
-    var salary=document.getElementById('salary')
-    var rental=document.getElementById('rental')
-    var population=document.getElementById('population')
-    if(unemployement && mortality && salary && rental && population) {
-        if (unemployement.value != '' && mortality.value != '' && salary.value != '' &&
-            rental.value != '' && population.value != '') {
-            if(checkRange(unemployement.value)&&checkRange(mortality.value)&&checkRange(salary.value)
-                &&checkRange(rental.value)&&checkRange(population.value)){
-
-                var statesDataArr= new Array()
-                for(i=0;i<data.length;i++){
-                    statesDataArr[i]=new Array();
-                    statesDataArr[i][0]=data[i]["RegionName"]
-                    // data[i]["POPULATION"]=1
-                    var calculatedVal= (parseFloat(data[i]["UNEMPLOYMENT_RATE"]*unemployement.value))+
-                        parseFloat((data[i]["POPULATION"]*population.value))+
-                        parseFloat((data[i]["AVERAGE_SALARY/MON"]*rental.value))+
-                        parseFloat((data[i]["PRICE/SQ. FT."]*salary.value))+
-                        parseFloat((data[i]["MORTALITY_RATE"]*mortality.value))
-                    statesDataArr[i][1] = calculatedVal
-                    statesDataArr[i][2] = parseFloat(data[i]["UNEMPLOYMENT_RATE"]*unemployement.value)
-                    statesDataArr[i][3] = parseFloat((data[i]["POPULATION"]*population.value))
-                    statesDataArr[i][4] = parseFloat((data[i]["AVERAGE_SALARY/MON"]*rental.value))
-                    statesDataArr[i][5] = parseFloat((data[i]["PRICE/SQ. FT."]*salary.value))
-                    statesDataArr[i][6] = parseFloat((data[i]["MORTALITY_RATE"]*mortality.value))
-
-                }
-                var labels=["Aggregated Sum of Weights","Unemployement Rate","Population","Average Salary/Mon","Price per sq.ft.","Mortality Rate"]
-                statesDataArr.sort(function(a, b){return b[1] - a[1]});
-
-                for(i=0;i<statesDataArr.length;i++){
-                    statesDataArr[i][1] =  statesDataArr[i][1]/statesDataArr[statesDataArr.length-1][1]
-                }
-                topStates=[statesDataArr[0][0],statesDataArr[1][0],statesDataArr[2][0]]
-                var arr_state1=[ statesDataArr[0][1],statesDataArr[0][2],statesDataArr[0][3],statesDataArr[0][4],statesDataArr[0][5]
-                    ,statesDataArr[0][6] ]
-                var arr_state2=[statesDataArr[1][1],statesDataArr[1][2],statesDataArr[1][3],statesDataArr[1][4],statesDataArr[1][5]
-                    ,statesDataArr[1][6]]
-                var arr_state3=[statesDataArr[2][1],statesDataArr[2][2],statesDataArr[2][3],statesDataArr[2][4],statesDataArr[2][5]
-                    ,statesDataArr[2][6] ]
-
-
-                document.getElementById("state1").innerHTML="1. "+statesDataArr[0][0]
-                document.getElementById("state2").innerHTML="2. "+statesDataArr[1][0]
-                document.getElementById("state3").innerHTML="3. "+statesDataArr[2][0]
-                usaMap.displayWeights(arr_state1,'weight1',labels)
-                usaMap.displayWeights(arr_state2,'weight2',labels)
-                usaMap.displayWeights(arr_state3,'weight3',labels)
-
-                usaMap.highlightMap(topStates)
-
-            }
-        }
-    }
-    clearFields()
-}
-
-function checkRange(value){
-    if(value>=1 && value <= 5){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-var option
-function plotLineChart(parameter){
-    option = parameter
-     employmentData =[];
-     populationData=[];
-     mortalityData=[];
-     rentalData=[];
-     salaryData=[];
-     index=0;
-    get2016Data()
-
-   // }
-}
-
-function drawLineChart() {
-    var unemp_arr = new Array();
-
-    for(var i=0;i<topStates.length;i++){
-        unemp_arr[i] = new Array()
-        unemp_arr[i].state=topStates[i];
-        unemp_arr[i].values = new Array();
-        for(var j=0;j<employmentData.length;j++){
-            unemp_arr[i]['values'][j]=employmentData[j]['data'][i]
-        }
-    }
-
-    var pop_arr = new Array();
-
-    for(var i=0;i<topStates.length;i++){
-        pop_arr[i] = new Array()
-        pop_arr[i].state=topStates[i];
-        pop_arr[i].values = new Array();
-        for(var j=0;j<populationData.length;j++){
-            pop_arr[i]['values'][j]=populationData[j]['data'][i]
-        }
-    }
-
-    var sal_arr = new Array();
-
-    for(var i=0;i<topStates.length;i++){
-        sal_arr[i] = new Array()
-        sal_arr[i].state=topStates[i];
-        sal_arr[i].values = new Array();
-        for(var j=0;j<salaryData.length;j++){
-            sal_arr[i]['values'][j]=salaryData[j]['data'][i]
-        }
-    }
-
-    var rent_arr = new Array();
-
-    for(var i=0;i<topStates.length;i++){
-        rent_arr[i] = new Array()
-        rent_arr[i].state=topStates[i];
-        rent_arr[i].values = new Array();
-        for(var j=0;j<rentalData.length;j++){
-            rent_arr[i]['values'][j]=rentalData[j]['data'][i]
-        }
-    }
-
-    var mor_arr = new Array();
-
-    for(var i=0;i<topStates.length;i++){
-        mor_arr[i] = new Array()
-        mor_arr[i].state=topStates[i];
-        mor_arr[i].values = new Array();
-        for(var j=0;j<mortalityData.length;j++){
-            mor_arr[i]['values'][j]=mortalityData[j]['data'][i]
-        }
-    }
-
-    var line
-    if(option=="unemployement") {
-        line = new LineChart(option, unemp_arr);
-    }else if(option=="population"){
-        line = new LineChart(option, pop_arr);
-    }else if(option=="salary"){
-        line = new LineChart(option, sal_arr);
-    }else if(option=="rental"){
-        line = new LineChart(option, rent_arr);
-    }else{
-        line = new LineChart(option, mor_arr);
-    }
-    line.update(topStates)
-}

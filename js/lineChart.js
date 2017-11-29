@@ -2,6 +2,7 @@
 class LineChart {
 
     constructor(option,allData) {
+        console.log(allData);
         this.width = 500;
         this.height = 500;
          this.data = allData
@@ -21,7 +22,9 @@ class LineChart {
     }
 
     update(topStates){
-        var years_arr = [2010,2011,2012,2013,2014,2015,2016]
+        var years_arr = [2010,2011,2012,2013,2014,2015,2016];
+        var years_arr_brush = [2010,2011,2012,2013,2014,2015,2016];
+        var ranges=new Array();
         // set the ranges
         var xScale = d3.scaleLinear().range([this.margin.left, (this.width - this.margin.right)]).domain([2010,2016])
         var data_values = new Array()
@@ -66,7 +69,82 @@ class LineChart {
         }
 
         this.drawLegends(topStates)
+
+        var svg=d3.select('#year-brush').select("svg")
+        var linegraph=svg.append("line")          // attach a line
+            .style("stroke", "black")  // colour the line
+            .attr("x1", 10)     // x position of the first end of the line
+            .attr("y1", 10)      // y position of the first end of the line
+            .attr("x2", 2600)     // x position of the second end of the line
+            .attr("y2", 10)
+            .style("stroke-dasharray","5,5");
+
+
+        var line_grp_circles = svg.selectAll("circle").data(years_arr_brush)
+        var line_grp_circles_new=line_grp_circles.enter().append("circle");
+        line_grp_circles.exit().remove();
+        line_grp_circles=line_grp_circles_new.merge(line_grp_circles);
+        line_grp_circles
+            .attr("cx", function (d,i) {
+                ranges[i]=new Object();
+                ranges[i].year=d;
+                ranges[i].x=i*50+50
+                return i*50+50;
+            })
+            .attr("cy", function (d) { return 10; })
+            .attr("r", function (d) { return 10; })
+
+        var text_label = svg.selectAll("g").data(years_arr_brush)
+
+        var text_label_new=text_label.enter().append("text");
+        text_label.exit().remove();
+        text_label=text_label_new.merge(text_label);
+
+        console.log(ranges);
+        text_label.text(function(d) {
+            return d;
+        }).attr("dx",
+            function(d,i) {
+                return i*50+40;
+            }).attr("dy",
+            function(d) {
+                return 35
+            })
+
+        function brushed(){
+            if(d3.event.selection){
+                var x_left=d3.event.selection[0];
+                var x_right=d3.event.selection[1];
+                find_brush_years(x_left,x_right,ranges);
+                //console.log(x_left,x_right)
+            }
+        }
+
+
+
+        var brush = d3.brushX().extent([[0,0],[400,50]]).on("end", brushed);
+        var svg_othr=d3.select('#year-brush').select("svg")
+        svg_othr.append("g").attr("class", "brush").call(brush);
+        var self = this;
+
+        function find_brush_years(x_left,x_right,ranges){
+            var new_years = new Array();
+            for(var i=0;i<ranges.length;i++){
+                if(x_left<=ranges[i].x && x_right>=ranges[i].x){
+                    console.log(ranges[i].year);
+                    new_years.push(ranges[i].year)
+                }
+            }
+            self.plotData(0,new_years,lineGen,xScale,yScale)
+        }
+
+
+
+
+
     }
+
+
 
     tooltip_render(tooltip_data) {
         var text = "<h5>Year:" + tooltip_data.year+ "</h5>";

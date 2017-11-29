@@ -81,130 +81,132 @@
     <div class="col-sm-12" id="legend">
     </div>
 </div>
+
+<hr>
+<h2 style="text-align: center">Your Personal State Recommender</h2>
+<hr style="width: 40%;margin: auto">
+
+
 <div class="row">
-    <div class="col-sm-5" id="userInputTable">
-        <h2>Basic Table</h2>
-        <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>S.No</th>
-                <th>Factors</th>
-                <th>Input Your Ranking</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1.</td>
-                <td>Unemployement Rate</td>
-                <td><input type="text" class="form-control" id="unemployement"></td>
-            </tr>
-            <tr>
-                <td>2.</td>
-                <td>Population</td>
-                <td><input type="text" class="form-control" id="population"></td>
-            </tr>
-            <tr>
-                <td>3.</td>
-                <td>Average Salary</td>
-                <td><input type="text" class="form-control" id="salary"></td>
-            </tr>
-            <tr>
-                <td>4.</td>
-                <td>Rental Cost</td>
-                <td><input type="text" class="form-control" id="rental"></td>
-            </tr>
-            <tr>
-                <td>5.</td>
-                <td>Mortality Rate</td>
-                <td><input type="text" class="form-control" id="mortality"></td>
-            </tr>
-            </tbody>
-        </table>
-        <button type="button" class="btn btn-success" onclick="getTopStates()">Give my top states</button>
+    <h3 style="text-align: center">Rank the below factors from 1 to 5 as per your priority</h3>
+
+    <div class="col" id="userInputTable" >
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="unemployement">Unemployment Rate</label>
+                <input value=1 type="text" class="form-control" id="unemployement">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="population">Population</label>
+                <input value=2 type="text" class="form-control" id="population">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="salary">Average Salary</label>
+                <input value = 3 type="text" class="form-control" id="salary">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="rental">Rental Cost</label>
+                <input value=4 type="text" class="form-control" id="rental">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="mortality">Average Mortality Rate</label>
+                <input value=5 type="text" class="form-control" id="mortality">
+            </div>
+            <div class="form-group col-md-2">
+                <button type="button" class="btn" style="margin-top:15px;background-color: #8b221b;color: #ffffff" onclick="getTopStates()">Give my top states</button>
+            </div>
+
+
+        </div>
     </div>
+</div>
+
+
+<div class="row" style="margin: 0px">
     <div class="col-sm-6" id="infoPanel" style="display:none;">
-        <h2>Top 3 recommended states</h2>
-        <div class="row" >
-            <div class="row" >
+        <h4 style="text-align: center">Top 3 recommended states</h4>
+        <div class="row" style="margin: 0px">
+            <div class="row" style="margin: 0px">
                 <div class="col-sm-3">
-                    <h4 id="state1"></h4>
+                    <h5 id="state1"></h5>
                 </div>
                 <div class="col-sm-9">
                     <svg id="weight1" height="20px" width="600"></svg>
                 </div>
                 <!--<div class="col-sm-5">-->
-                    <!--<svg id="rank1" height="20px" width="150px"></svg>-->
+                <!--<svg id="rank1" height="20px" width="150px"></svg>-->
                 <!--</div>-->
             </div>
-            <div class="row" >
+            <div class="row" style="margin: 0px">
                 <div class="col-sm-12">
                     <!--<div class="btn-group">-->
-                        <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('unemployement')">Unemployement Rate</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('population')">Population</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('salary')">Average Salary</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('rental')">Rental Cost</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('mortality')">Mortality</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('unemployement')">Unemployement Rate</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('population')">Population</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('salary')">Average Salary</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('rental')">Rental Cost</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('mortality')">Mortality</button>-->
                     <!--</div>-->
                 </div>
             </div>
         </div>
-        <div class="row" >
-            <div class="row" >
+        <div class="row" style="margin: 0px">
+            <div class="row" style="margin: 0px">
                 <div class="col-sm-3">
-                    <h4 id="state2"></h4>
+                    <h5 id="state2"></h5>
                 </div>
                 <div class="col-sm-9">
                     <svg id="weight2" height="20px" width="600"></svg>
                 </div>
                 <!--<div class="col-sm-5">-->
-                    <!--<svg id="rank2" height="20px" width="150px"></svg>-->
+                <!--<svg id="rank2" height="20px" width="150px"></svg>-->
                 <!--</div>-->
             </div>
-            <div class="row" >
+            <div class="row" style="margin: 0px">
                 <div class="col-sm-12">
                     <!--<div class="btn-group">-->
-                        <!--<button type="button" class="btn btn-primary btn-sm">Unemployement Rate</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm">Population</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm">Average Salary</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm">Rental Cost</button>-->
-                        <!--<button type="button" class="btn btn-primary btn-sm">Mortality</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm">Unemployement Rate</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm">Population</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm">Average Salary</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm">Rental Cost</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm">Mortality</button>-->
                     <!--</div>-->
                 </div>
             </div>
         </div>
-        <div class="row" >
-            <div class="row" >
+        <div class="row" style="margin: 0px">
+            <div class="row" style="margin: 0px">
                 <div class="col-sm-3">
-                    <h4 id="state3"></h4>
+                    <h5 id="state3"></h5>
                 </div>
                 <div class="col-sm-9" >
                     <svg id="weight3" height="20px" width="600"></svg>
                 </div>
                 <!--<div class="col-sm-5">-->
-                    <!--<svg id="rank3" height="20px" width="150px"></svg>-->
+                <!--<svg id="rank3" height="20px" width="150px"></svg>-->
                 <!--</div>-->
             </div>
-                <div class="row" >
-                    <div class="col-sm-12" >
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('unemployement')">Unemployement Rate</button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('population')">Population</button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('salary')">Average Salary</button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('rental')">Rental Cost</button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="plotLineChart('mortality')">Mortality</button>
-                        </div>
-                    </div>
-                </div>
+
+        </div>
+        <div class="row"><svg id="bar-legends-all"></svg></div>
+        <div class="row" style="margin: 0px">
+            <h4 style="padding-left: 25px">Select the factor to analyse its trend in these states over the past 7 years</h4>
+            <div class="col-sm-12" >
+
+                <button type="button" class="btn btn-primary" onclick="plotLineChart('unemployement')">Unemployement Rate</button>
+                <button type="button" class="btn btn-primary" onclick="plotLineChart('population')">Population</button>
+                <button type="button" class="btn btn-primary" onclick="plotLineChart('salary')">Average Salary</button>
+                <button type="button" class="btn btn-primary" onclick="plotLineChart('rental')">Rental Cost</button>
+                <button type="button" class="btn btn-primary" onclick="plotLineChart('mortality')">Mortality</button>
+
+            </div>
         </div>
     </div>
-
-</div>
-
-<div class="row">
-    <div class="col-sm-6" id="line-chart">
-    </div>
-    <div class="col-sm-6" id="legend-line-chart">
+    <div class="col-sm-6">
+        <div class="row" id="line-chart" style="margin: 0px">
+        </div>
+        <div class="row" id="legend-line-chart" style="margin: 0px">
+        </div>
+        <div class="row" style="margin: 0px" id="year-brush"><svg width="400px"></svg></div>
     </div>
 </div>
 

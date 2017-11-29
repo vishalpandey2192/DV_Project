@@ -7,7 +7,9 @@ class Map {
         //Width and height of map
         this.width = 760;
         this.height = 500;
-        this.data = allData
+        this.data = allData;
+        this.colors_arr=["green","blue","red","yellow","black"];
+        this.factor_arr = ["Unemployment Rate","Population","Average Salary","Rental Cost","Average Mortality Rate"]
 
 
         //Create SVG element and append map to the SVG
@@ -207,6 +209,7 @@ class Map {
     }
 
     displayWeights(val,obj,labels){
+        var self=this;
         var element = d3.select("#"+obj)
         var tooltip = d3.select("body").append("div")
             .attr("class", "tooltip-title")
@@ -230,6 +233,19 @@ class Map {
         var color = d3.scaleLinear()
             .domain([yMin, yMax])
             .range([d3.rgb(col).brighter(), d3.rgb(col).darker()]);
+
+        // var color = 'black';
+        // if (selectedDimension == 'unemployement') {
+        //     color ="red"
+        // } else if (selectedDimension == 'population') {
+        //     color="blue"
+        // } else if (selectedDimension == 'salary') {
+        //     color="red"
+        // } else if (selectedDimension == 'price') {
+        //     color="pink"
+        // } else if (selectedDimension == 'mortality') {
+        //     color="orange"
+        // }
 
         chart.exit().attr("opacity", 0.5)
             .transition()
@@ -260,8 +276,9 @@ class Map {
             })
             .attr("y", 5)
             .attr("height", 15)
-            .attr("fill", function(d) {
-                    return color(d)
+            .attr("fill", function(d,i) {
+                console.log("for bar chart",d,i)
+                return self.colors_arr[i]
             })
         element.selectAll("rect").on("mouseout", function(d) {
                 tooltip.transition()
@@ -290,6 +307,35 @@ class Map {
                 tooltip.style("left", (d3.event.pageX) + "px")
                 tooltip.style("top", (d3.event.pageY) + "px");
             })
+
+
+        var legend = d3.select("#bar-legends-all").append("svg")
+            .attr("width", 100)
+            .attr("height", 100)
+            .selectAll("g")
+            .data(self.factor_arr)
+            .enter()
+            .append("g")
+            .attr("transform", function(d, i) {
+                return "translate(0," + i * 20 + ")";
+            });
+
+        legend.append("rect")
+            .style("stroke-dasharray", ("1, 5"))
+            .attr("width", 18)
+            .attr("height", 3)
+            .style("fill", function(d,i){
+                return self.colors_arr[i]
+            });
+
+
+        legend.append("text")
+            .attr("x", 24)
+            .attr("y", 4)
+            .attr("dy", ".35em")
+            .text(function (d,i) {
+                return self.factor_arr[i]
+            });
 
     }
 }
