@@ -113,7 +113,6 @@ function get2016Data() {
 function get2015Data() {
 
     d3.csv("2015_us_states_data.csv", function(error, allData) {
-      //  var defer = $.Deferred();
         allData.forEach(function(d) {
             // Convert numeric values to 'numbers'
             d['POPULATION'] = +d['POPULATION'];
@@ -156,17 +155,11 @@ function get2015Data() {
         }
         index++;
         get2014Data()
-        // setTimeout(function () {
-        //     defer.resolve();
-        // }, 5000);
-        //
-        // return defer.promise()
     });
 }
 
 function get2014Data() {
     d3.csv("2014_us_states_data.csv", function(error, allData) {
-        //var defer = $.Deferred();
         allData.forEach(function(d) {
             // Convert numeric values to 'numbers'
             d['POPULATION'] = +d['POPULATION'];
@@ -207,11 +200,6 @@ function get2014Data() {
             }
         }
         index++;
-        // setTimeout(function () {
-        //     defer.resolve();
-        // }, 5000);
-        //
-        // return defer;
         get2013Data()
     });
 
@@ -219,7 +207,6 @@ function get2014Data() {
 
 function get2013Data() {
     d3.csv("2013_us_states_data.csv", function(error, allData) {
-       // var defer = $.Deferred();
         allData.forEach(function(d) {
             // Convert numeric values to 'numbers'
             d['POPULATION'] = +d['POPULATION'];
@@ -260,11 +247,6 @@ function get2013Data() {
             }
         }
         index++;
-        // setTimeout(function () {
-        //     defer.resolve();
-        // }, 5000);
-        //
-        // return defer;
         get2012Data()
     });
 
@@ -535,8 +517,6 @@ function plotLineChart(parameter){
     salaryData=[];
     index=0;
     get2016Data()
-
-    // }
 }
 
 function drawLineChart() {

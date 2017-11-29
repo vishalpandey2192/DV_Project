@@ -5,24 +5,25 @@ class LineChart {
         console.log(allData);
         this.width = 500;
         this.height = 500;
-         this.data = allData
-         this.value = option
+        this.data = allData
+        this.value = option
         this.colors_arr=["green","blue","red"]
         this.radius = 3.5
 
         //Create SVG element and append map to the SVG
         document.getElementById('line-chart').innerHTML = ''
-            this.svg = d3.select('#line-chart')
-                .append('svg')
-                .attr('class', 'chart')
-                .attr('width', this.width)
-                .attr('height', this.height)
-                .attr('style', 'padding-left: 8px;')
+        this.svg = d3.select('#line-chart')
+            .append('svg')
+            .attr('class', 'chart')
+            .attr('width', this.width)
+            .attr('height', this.height)
+            .attr('style', 'padding-left: 8px;')
         this.margin = {top: 30, right: 30, bottom: 30, left: 60}
     }
 
     update(topStates){
         var years_arr = [2010,2011,2012,2013,2014,2015,2016];
+
         var years_arr_brush = [2010,2011,2012,2013,2014,2015,2016];
         var ranges=new Array();
         // set the ranges
@@ -135,7 +136,10 @@ class LineChart {
                     new_years.push(ranges[i].year)
                 }
             }
-            self.plotData(0,new_years,lineGen,xScale,yScale)
+            for(var j=0;j<3;j++){
+                self.plotData(j,new_years,lineGen,xScale,yScale)
+            }
+
         }
 
 
@@ -186,16 +190,58 @@ class LineChart {
     }
 
     plotData(index,years_arr,lineGen,xScale,yScale){
+        console.log("years in plot data",years_arr, years_arr.length);
         var tooltip = d3.select("body").append("div")
             .attr("class", "tooltip-title")
             .style("opacity", 0);
         var final_data = new Array()
+        var pre_final_data = new Array()
         var self=this
-        for(var i =0;i<this.data[index].values.length;i++){
-            final_data[i] = new Object()
-            final_data[i].year=years_arr[years_arr.length-i-1]
-            final_data[i].value=this.data[index].values[i]
+        console.log("data inside plot data",this.data)
+        if(years_arr.length == 7){
+            console.log("years length 7")
+            for(var i =0;i<this.data[index].values.length;i++){
+                final_data[i] = new Object()
+                final_data[i].year=years_arr[years_arr.length-i-1]
+                final_data[i].value=this.data[index].values[i]
+            }
+        }else{
+            console.log("years length not 7")
+            var years_arr_const = [2010,2011,2012,2013,2014,2015,2016];
+
+            for(var i =0;i<this.data[index].values.length;i++){
+                pre_final_data[i] = new Object()
+                pre_final_data[i].year=years_arr_const[years_arr_const.length-i-1]
+                pre_final_data[i].value=this.data[index].values[i]
+            }
+            var i_value_years = new Array()
+            for(var j=0;j<years_arr.length;j++){
+                if(years_arr[j] == 2010){
+                    i_value_years.push(6)
+                }else if(years_arr[j] == 2011){
+                    i_value_years.push(5)
+                }else if(years_arr[j] == 2012){
+                    i_value_years.push(4)
+                }else if(years_arr[j] == 2013){
+                    i_value_years.push(3)
+                }else if(years_arr[j] == 2014){
+                    i_value_years.push(2)
+                }else if(years_arr[j] == 2015){
+                    i_value_years.push(1)
+                }else if(years_arr[j] == 2016){
+                    i_value_years.push(0)
+                }else{
+                    console.log("year not found")
+                }
+            }
+            console.log(i_value_years)
+            for(var k =0;k<i_value_years.length;k++){
+                var index_value_for_pre_final = i_value_years[k]
+                final_data[k] = pre_final_data[index_value_for_pre_final]
+            }
         }
+
+        console.log("final data",final_data)
         var path = this.svg.append('svg:path')
             .attr('d', lineGen(final_data))
             .attr('stroke', self.colors_arr[index])
@@ -212,9 +258,14 @@ class LineChart {
             .attr("stroke-dashoffset", 0);
 
 
-        this.svg.selectAll("dot")
+
+
+        var dots = this.svg.selectAll("dot")
             .data(final_data)
-            .enter().append("circle")
+        var dots_new = dots.enter().append("circle")
+        dots.exit().remove();
+        dots=dots_new.merge(dots);
+        dots
             .attr("r", self.radius)
             .attr("cx", function(d) { return xScale(d.year); })
             .attr("cy", function(d) { return yScale(d.value); })
