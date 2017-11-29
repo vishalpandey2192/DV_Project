@@ -8,8 +8,8 @@ class Map {
         this.width = 760;
         this.height = 500;
         this.data = allData;
-        this.colors_arr=["green","blue","red","yellow","black"];
-        this.factor_arr = ["Unemployment Rate","Population","Average Salary","Rental Cost","Average Mortality Rate"]
+        this.colors_arr=["green","blue","red","yellow","magenta","black"];
+        this.factor_arr = ["Aggregated Sum of Weights","Unemployement Rate","Population","Average Salary/Mon","Price per sq.ft.","Mortality Rate"]
 
 
         //Create SVG element and append map to the SVG
@@ -214,11 +214,10 @@ class Map {
         var tooltip = d3.select("body").append("div")
             .attr("class", "tooltip-title")
             .style("opacity", 0);
-        val[1]= val[1]*2
-        val[2] = val[2]/1000000
-        val[3]=val[3]/5000
-        val[4]=val[4]*5
-        val[5]=val[5]*5
+        var i =0
+        for(i=0;i<val.length;i++){
+            val[i]=val[i]/3
+        }
         var chart = element.selectAll("rect")
             .data(val);
 
@@ -233,19 +232,6 @@ class Map {
         var color = d3.scaleLinear()
             .domain([yMin, yMax])
             .range([d3.rgb(col).brighter(), d3.rgb(col).darker()]);
-
-        // var color = 'black';
-        // if (selectedDimension == 'unemployement') {
-        //     color ="red"
-        // } else if (selectedDimension == 'population') {
-        //     color="blue"
-        // } else if (selectedDimension == 'salary') {
-        //     color="red"
-        // } else if (selectedDimension == 'price') {
-        //     color="pink"
-        // } else if (selectedDimension == 'mortality') {
-        //     color="orange"
-        // }
 
         chart.exit().attr("opacity", 0.5)
             .transition()
@@ -277,25 +263,14 @@ class Map {
             .attr("y", 5)
             .attr("height", 15)
             .attr("fill", function(d,i) {
-                console.log("for bar chart",d,i)
                 return self.colors_arr[i]
             })
         element.selectAll("rect").on("mouseout", function(d) {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", 0);
-                // d3.select(this)
-                //     .style("fill",self.colors_arr[index])
-                //     .attr("r",self.radius)
             })
             .on("mouseover", function(d,i) {
-                // d3.select(this)
-                //     .style("fill","orange")
-                //     .attr("r",self.radius*2)
-                // var coordinates = [0, 0];
-                // coordinates = d3.mouse(this);
-                // var x = coordinates[0];
-                // var y = coordinates[1];
                 var tooltip_data = {
                     "label": labels[i],
                 }

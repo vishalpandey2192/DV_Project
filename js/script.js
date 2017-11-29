@@ -18,13 +18,46 @@ d3.csv("2016_us_states_data.csv", function(error, allData) {
         d['PRICE/SQ. FT.'] = +d['PRICE/SQ. FT.'];
     });
 
+    var rank = 1
+    allData.sort(function(a, b){return b['POPULATION'] - a['POPULATION']});
+    allData.forEach(function(d) {
+        d['POPULATION_RANK'] = rank ++
+    });
+
+    rank = 51
+    allData.sort(function(a, b){return b['AVERAGE_SALARY/MON'] - a['AVERAGE_SALARY/MON']});
+    allData.forEach(function(d) {
+        d['AVERAGE_SALARY/MON_RANK'] = rank
+        rank--
+    });
+
+    rank = 1
+    allData.sort(function(a, b){return b['UNEMPLOYMENT_RATE'] - a['UNEMPLOYMENT_RATE']});
+    allData.forEach(function(d) {
+        d['UNEMPLOYMENT_RATE_RANK'] = rank
+        rank++
+    });
+
+    rank = 1
+    allData.sort(function(a, b){return b['MORTALITY_RATE'] - a['MORTALITY_RATE']});
+    allData.forEach(function(d) {
+        d['MORTALITY_RATE_RANK'] = rank
+        rank++
+    });
+
+    rank = 1
+    allData.sort(function(a, b){return b['PRICE/SQ. FT.'] - a['PRICE/SQ. FT.']});
+    allData.forEach(function(d) {
+        d['PRICE/SQ. FT_RANK'] = rank
+        rank++
+    });
+
     data=allData;
     usaMap = new Map(allData);
     window.barChart = new BarChart(allData);
 
     d3.json("us-state-centroid.json", function(json) {
         usaMap.drawMap(json, 'unemployement');
-        // Draw the Bar chart for the first time
         barChart.updateBarChart('unemployement');
     });
 });
@@ -63,11 +96,11 @@ function get2016Data() {
         for(var j=0;j<topStates.length;j++) {
             for (var i = 0; i < allData.length; i++) {
                 if(topStates[j]==allData[i]["RegionName"]) {
-                    employmentData[index]['data'][i] = allData[i]['UNEMPLOYMENT_RATE'];
-                    populationData[index]['data'][i] = allData[i]['POPULATION']
-                    salaryData[index]['data'][i] = allData[i]['AVERAGE_SALARY/MON']
-                    mortalityData[index]['data'][i] = allData[i]['MORTALITY_RATE']
-                    rentalData[index]['data'][i] = allData[i]['PRICE/SQ. FT.']
+                    employmentData[index]['data'][j] = allData[i]['UNEMPLOYMENT_RATE'];
+                    populationData[index]['data'][j] = allData[i]['POPULATION']
+                    salaryData[index]['data'][j] = allData[i]['AVERAGE_SALARY/MON']
+                    mortalityData[index]['data'][j] = allData[i]['MORTALITY_RATE']
+                    rentalData[index]['data'][j] = allData[i]['PRICE/SQ. FT.']
                 }
             }
         }
@@ -424,6 +457,7 @@ function clearFields() {
     document.getElementById('salary').innerHTML=''
     document.getElementById('rental').value=''
     document.getElementById('rental').innerHTML=''
+    document.getElementById('line-chart').innerHTML = ''
 }
 function getTopStates(){
     document.getElementById("infoPanel").style.display="block"
@@ -443,25 +477,22 @@ function getTopStates(){
                     statesDataArr[i]=new Array();
                     statesDataArr[i][0]=data[i]["RegionName"]
                     // data[i]["POPULATION"]=1
-                    var calculatedVal= (parseFloat(data[i]["UNEMPLOYMENT_RATE"]*unemployement.value))+
-                        parseFloat((data[i]["POPULATION"]*population.value))+
-                        parseFloat((data[i]["AVERAGE_SALARY/MON"]*rental.value))+
-                        parseFloat((data[i]["PRICE/SQ. FT."]*salary.value))+
-                        parseFloat((data[i]["MORTALITY_RATE"]*mortality.value))
+                    var calculatedVal= (parseFloat(data[i]["UNEMPLOYMENT_RATE_RANK"]*unemployement.value))+
+                        parseFloat((data[i]["POPULATION_RANK"]*population.value))+
+                        parseFloat((data[i]["AVERAGE_SALARY/MON_RANK"]*salary.value))+
+                        parseFloat((data[i]["PRICE/SQ. FT_RANK"]*rental.value))+
+                        parseFloat((data[i]["MORTALITY_RATE_RANK"]*mortality.value))
                     statesDataArr[i][1] = calculatedVal
-                    statesDataArr[i][2] = parseFloat(data[i]["UNEMPLOYMENT_RATE"]*unemployement.value)
-                    statesDataArr[i][3] = parseFloat((data[i]["POPULATION"]*population.value))
-                    statesDataArr[i][4] = parseFloat((data[i]["AVERAGE_SALARY/MON"]*rental.value))
-                    statesDataArr[i][5] = parseFloat((data[i]["PRICE/SQ. FT."]*salary.value))
-                    statesDataArr[i][6] = parseFloat((data[i]["MORTALITY_RATE"]*mortality.value))
+                    statesDataArr[i][2] = parseFloat(data[i]["UNEMPLOYMENT_RATE_RANK"]*unemployement.value)
+                    statesDataArr[i][3] = parseFloat((data[i]["POPULATION_RANK"]*population.value))
+                    statesDataArr[i][4] = parseFloat((data[i]["AVERAGE_SALARY/MON_RANK"]*salary.value))
+                    statesDataArr[i][5] = parseFloat((data[i]["PRICE/SQ. FT_RANK"]*rental.value))
+                    statesDataArr[i][6] = parseFloat((data[i]["MORTALITY_RATE_RANK"]*mortality.value))
 
                 }
                 var labels=["Aggregated Sum of Weights","Unemployement Rate","Population","Average Salary/Mon","Price per sq.ft.","Mortality Rate"]
                 statesDataArr.sort(function(a, b){return b[1] - a[1]});
 
-                for(i=0;i<statesDataArr.length;i++){
-                    statesDataArr[i][1] =  statesDataArr[i][1]/statesDataArr[statesDataArr.length-1][1]
-                }
                 topStates=[statesDataArr[0][0],statesDataArr[1][0],statesDataArr[2][0]]
                 var arr_state1=[ statesDataArr[0][1],statesDataArr[0][2],statesDataArr[0][3],statesDataArr[0][4],statesDataArr[0][5]
                     ,statesDataArr[0][6] ]
