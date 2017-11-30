@@ -70,7 +70,8 @@ class Map {
             .enter()
             .append("path")
             .attr("id",function(d){
-                return "id_"+d.properties.name
+                var stateName = d.properties.name.replace(/\s/g, '');
+                return "id_"+stateName
             })
             .attr("d", this.path)
             .style("stroke", "#fff")
@@ -200,9 +201,15 @@ class Map {
     }
 
     highlightMap(arr){
+        for(var j=0;j<this.data.length;j++){
+            var stateName = this.data[j].RegionName.replace(/\s/g, '');
+            var element = d3.select("#id_" + stateName)
+            element.classed("highlight-class", false)
+        }
         for(i=0;i<arr.length;i++) {
-            d3.select("#map-view").classed("highlight-class", false)
-            var element = d3.select("#id_" + arr[i])
+            var stateName = arr[i].replace(/\s/g, '');
+           // d3.select("#map-view").classed("highlight-class", false)
+            var element = d3.select("#id_" + stateName)
             element.classed("highlight-class", true)
             console.log(arr[i])
         }

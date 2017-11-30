@@ -500,7 +500,7 @@ function getTopStates(){
 }
 
 function checkRange(value){
-    if(value>=1 && value <= 5){
+    if(value>=0 && value <= 5){
         return true;
     }else{
         return false;
