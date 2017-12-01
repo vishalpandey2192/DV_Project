@@ -440,6 +440,8 @@ function clearFields() {
     document.getElementById('rental').value=''
     document.getElementById('rental').innerHTML=''
     document.getElementById('line-chart').innerHTML = ''
+    document.getElementById('legend-line-chart').innerHTML=''
+    document.getElementById('brush-section').style.display="none"
 }
 function getTopStates(){
     document.getElementById("infoPanel").style.display="block"
@@ -517,6 +519,7 @@ function plotLineChart(parameter){
     salaryData=[];
     index=0;
     get2016Data()
+    document.getElementById('brush-section').style.display="block"
 }
 
 function drawLineChart() {

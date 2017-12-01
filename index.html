@@ -89,29 +89,28 @@
 
 <div class="row">
     <h3 style="text-align: center">Rank the below factors from 0 to 5 as per your priority</h3>
-    <h5 style="text-align: center">[0 : Not Important 5 : Most Important]</h5>
-
+    <h5 style="text-align: center">[0:Not Important 5:Most Important]</h5>
     <div class="col" id="userInputTable" >
         <div class="form-row">
             <div class="form-group col-md-2">
                 <label for="unemployement">Unemployment Rate</label>
-                <input value="" type="text" class="form-control" id="unemployement">
+                <input value='' type="text" class="form-control" id="unemployement">
             </div>
             <div class="form-group col-md-2">
                 <label for="population">Population</label>
-                <input value="" type="text" class="form-control" id="population">
+                <input value='' type="text" class="form-control" id="population">
             </div>
             <div class="form-group col-md-2">
                 <label for="salary">Average Salary</label>
-                <input value = "" type="text" class="form-control" id="salary">
+                <input value = '' type="text" class="form-control" id="salary">
             </div>
             <div class="form-group col-md-2">
                 <label for="rental">Rental Cost</label>
-                <input value="" type="text" class="form-control" id="rental">
+                <input value='' type="text" class="form-control" id="rental">
             </div>
             <div class="form-group col-md-2">
                 <label for="mortality">Average Mortality Rate</label>
-                <input value="" type="text" class="form-control" id="mortality">
+                <input value='' type="text" class="form-control" id="mortality">
             </div>
             <div class="form-group col-md-2">
                 <button type="button" class="btn" style="margin-top:15px;background-color: #8b221b;color: #ffffff" onclick="getTopStates()">Give my top states</button>
@@ -175,24 +174,30 @@
         </div>
 
         <div class="row" style="margin: 0px">
-            <h4 style="padding-left: 25px">Select the factor to analyse its trend in these states over the past 7 years</h4>
+            <h4 style="padding-left: 20px;text-decoration: underline">Select the factor to analyse its trend in these states over the past 7 years</h4>
             <div class="col-sm-12" >
 
-                <button type="button" class="btn btn-primary" onclick="plotLineChart('unemployement')">Unemployement Rate</button>
-                <button type="button" class="btn btn-primary" onclick="plotLineChart('population')">Population</button>
-                <button type="button" class="btn btn-primary" onclick="plotLineChart('salary')">Average Salary</button>
-                <button type="button" class="btn btn-primary" onclick="plotLineChart('rental')">Rental Cost</button>
-                <button type="button" class="btn btn-primary" onclick="plotLineChart('mortality')">Mortality</button>
+                <button type="button" class="btn btn-primary btn-color" onclick="plotLineChart('unemployement')">Unemployement Rate</button>
+                <button type="button" class="btn btn-primary btn-color" onclick="plotLineChart('population')">Population</button>
+                <button type="button" class="btn btn-primary btn-color" onclick="plotLineChart('salary')">Average Salary</button>
+                <button type="button" class="btn btn-primary btn-color" onclick="plotLineChart('rental')">Rental Cost</button>
+                <button type="button" class="btn btn-primary btn-color" onclick="plotLineChart('mortality')">Mortality</button>
 
             </div>
         </div>
-    </div>
+        <br><br>
+        <div id="brush-section" style="display:none">
+        <h4 style="padding-left: 20px; text-decoration: underline"> Select the years range to analyse using brush</h4>
+        <h6 style="padding-left: 20px;">Brush appear after you select any factor from above</h6>
+        <br>
+        <div class="row" style="margin: 0px;padding-left: 50px" id="year-brush" ><svg width="400px"></svg></div>
+        </div>
+        </div>
     <div class="col-sm-6">
         <div class="row" id="line-chart" style="margin: 0px">
         </div>
         <div class="row" id="legend-line-chart" style="margin: 0px">
         </div>
-        <div class="row" style="margin: 0px" id="year-brush"><svg width="400px"></svg></div>
     </div>
 </div>
 

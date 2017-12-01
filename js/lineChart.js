@@ -94,6 +94,7 @@ class LineChart {
             })
             .attr("cy", function (d) { return 10; })
             .attr("r", function (d) { return 10; })
+            .attr("fill", "#ec6b4f")
 
         var text_label = svg.selectAll("g").data(years_arr_brush)
 
@@ -123,7 +124,7 @@ class LineChart {
 
 
 
-        var brush = d3.brushX().extent([[0,0],[400,50]]).on("end", brushed);
+        var brush = d3.brushX().extent([[0,-10],[400,40]]).on("end", brushed);
         var svg_othr=d3.select('#year-brush').select("svg")
         svg_othr.append("g").attr("class", "brush").call(brush);
         var self = this;
@@ -136,6 +137,50 @@ class LineChart {
                     new_years.push(ranges[i].year)
                 }
             }
+            document.getElementById('line-chart').innerHTML = ''
+
+            self.svg = d3.select('#line-chart')
+                .append('svg')
+                .attr('class', 'chart')
+                .attr('width', self.width)
+                .attr('height', self.height)
+                .attr('style', 'padding-left: 8px;')
+            self.margin = {top: 30, right: 30, bottom: 30, left: 60}
+
+            var years_arr = [2010,2011,2012,2013,2014,2015,2016];
+
+            var years_arr_brush = [2010,2011,2012,2013,2014,2015,2016];
+            var ranges=new Array();
+            // set the ranges
+            var xScale = d3.scaleLinear().range([self.margin.left, (self.width - self.margin.right)]).domain([2010,2016])
+            var data_values = new Array()
+            var index =0 ;
+            for(var i=0;i<self.data.length;i++){
+                for(var j=0;j<self.data[i]['values'].length;j++){
+                    data_values[index]=self.data[i]['values'][j]
+                    index++;
+                }
+            }
+
+            var yMax = d3.max(data_values, function(d) {
+                return d
+            });
+            var yMin = d3.min(data_values, function(d) {
+                return d
+            });
+            var yScale = d3.scaleLinear().range([self.height - self.margin.top, self.margin.bottom]).domain([yMin,yMax])
+
+            var xAxis = d3.axisBottom(xScale).tickFormat(function(d){ return d;});
+            var yAxis = d3.axisLeft(yScale).tickFormat(function(d){ return d;});
+            self.svg.append("svg:g")
+                .attr("transform", "translate(0," + (self.height - self.margin.bottom +1) + ")")
+                .attr("class","axis")
+                .call(xAxis.ticks(7))
+            self.svg.append("svg:g")
+                .attr("class","axis")
+                .attr("transform", "translate(" + (self.margin.left) + ",0)")
+                .call(yAxis.ticks(15));
+
             for(var j=0;j<3;j++){
                 self.plotData(j,new_years,lineGen,xScale,yScale)
             }
@@ -190,6 +235,9 @@ class LineChart {
     }
 
     plotData(index,years_arr,lineGen,xScale,yScale){
+
+
+
         console.log("years in plot data",years_arr, years_arr.length);
         var tooltip = d3.select("body").append("div")
             .attr("class", "tooltip-title")
@@ -241,6 +289,7 @@ class LineChart {
             }
         }
 
+
         console.log("final data",final_data)
         var path = this.svg.append('svg:path')
             .attr('d', lineGen(final_data))
@@ -256,7 +305,6 @@ class LineChart {
             .transition()
             .duration(2000)
             .attr("stroke-dashoffset", 0);
-
 
 
 

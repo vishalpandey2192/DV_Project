@@ -8,8 +8,8 @@ class Map {
         this.width = 760;
         this.height = 500;
         this.data = allData;
-        this.colors_arr=["green","blue","red","yellow","magenta","black"];
-        this.factor_arr = ["Aggregated Sum of Weights","Unemployement Rate","Population","Average Salary/Mon","Price per sq.ft.","Mortality Rate"]
+        this.colors_arr=["olive","orange","yellow","red","magenta","pink"];
+        this.factor_arr = ["Overall Score","Unemployment Rate","Population","Average Salary","Rental Cost","Mortality Rate"]
 
 
         //Create SVG element and append map to the SVG
@@ -223,7 +223,7 @@ class Map {
             .style("opacity", 0);
         var i =0
         for(i=0;i<val.length;i++){
-            val[i]=val[i]/3
+            val[i]=val[i]/4
         }
         var chart = element.selectAll("rect")
             .data(val);
@@ -293,7 +293,7 @@ class Map {
 
         var legend = d3.select("#bar-legends-all").append("svg")
             .attr("width", 100)
-            .attr("height", 100)
+            .attr("height", 150)
             .selectAll("g")
             .data(self.factor_arr)
             .enter()

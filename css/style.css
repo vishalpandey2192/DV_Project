@@ -140,6 +140,10 @@ rect:hover {
     font-size: 13px;
 }
 
+.btn-color{
+    background-color: #ec6b4f;
+    border-color: #c0513b;
+}
 /*!* basic positioning *!*/
 /*.legend { list-style: none; }*/
 /*.legend li { float: left; margin-right: 10px; }*/
