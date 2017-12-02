@@ -113,14 +113,17 @@
                 <input value='' type="text" class="form-control" id="mortality">
             </div>
             <div class="form-group col-md-2">
-                <button type="button" class="btn" style="margin-top:15px;background-color: #8b221b;color: #ffffff" onclick="getTopStates()">Give my top states</button>
+                <button type="button" id="ShowButton" class="btn" style="margin-top:15px;background-color: #8b221b;color: #ffffff" onclick="getTopStates()">Give my top states</button>
             </div>
 
+            <br><br>
+            <br><br>
+
+            <hr width="60%" size="5px" style="border-top: 3px solid #ff7b7b; ">
 
         </div>
     </div>
 </div>
-
 
 <div class="row" style="margin: 0px">
     <div class="col-sm-6" id="infoPanel" style="display:none;">
@@ -173,7 +176,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin: 0px">
+        <div id="focus-panel" class="row" style="margin: 0px">
             <h4 style="padding-left: 20px;text-decoration: underline">Select the factor to analyse its trend in these states over the past 7 years</h4>
             <div class="col-sm-12" >
 
@@ -187,12 +190,12 @@
         </div>
         <br><br>
         <div id="brush-section" style="display:none">
-        <h4 style="padding-left: 20px; text-decoration: underline"> Select the years range to analyse using brush</h4>
-        <h6 style="padding-left: 20px;">Brush appear after you select any factor from above</h6>
-        <br>
-        <div class="row" style="margin: 0px;padding-left: 50px" id="year-brush" ><svg width="400px"></svg></div>
+            <h4 style="padding-left: 20px; text-decoration: underline"> Select the years range to analyse using brush</h4>
+            <h6 style="padding-left: 20px;">Brush appear after you select any factor from above</h6>
+            <br>
+            <div class="row" style="margin: 0px;padding-left: 50px" id="year-brush" ><svg width="400px"></svg></div>
         </div>
-        </div>
+    </div>
     <div class="col-sm-6">
         <div class="row" id="line-chart" style="margin: 0px">
         </div>

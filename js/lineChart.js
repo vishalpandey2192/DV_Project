@@ -206,8 +206,8 @@ class LineChart {
         d3.select('#legend-line-chart').selectAll('svg').remove();
 
         var legend = d3.select("#legend-line-chart").append("svg")
-            .attr("width", 100)
-            .attr("height", 50)
+            .attr("width", 120)
+            .attr("height", 80)
             .selectAll("g")
             .data(topStates)
             .enter()

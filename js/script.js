@@ -306,7 +306,7 @@ function get2012Data() {
 
 function get2011Data() {
     d3.csv("2011_us_states_data.csv", function(error, allData) {
-       // var defer = $.Deferred();
+        // var defer = $.Deferred();
         allData.forEach(function(d) {
             // Convert numeric values to 'numbers'
             d['POPULATION'] = +d['POPULATION'];
@@ -425,6 +425,8 @@ function updateMap(value) {
     usaMap.updateMap(value)
     barChart.updateBarChart(value)
     clearFields()
+    document.getElementById("ShowButton").innerText= "Give my top states"
+    document.getElementById("ShowButton").style.backgroundColor='#8b221b'
     document.getElementById("infoPanel").style.display="none"
 }
 
@@ -444,6 +446,9 @@ function clearFields() {
     document.getElementById('brush-section').style.display="none"
 }
 function getTopStates(){
+
+    document.getElementById("ShowButton").innerText= "Scroll Down to see results";
+    document.getElementById("ShowButton").style.backgroundColor="green";
     document.getElementById("infoPanel").style.display="block"
     var unemployement=document.getElementById('unemployement')
     var mortality=document.getElementById('mortality')
@@ -499,6 +504,7 @@ function getTopStates(){
         }
     }
     clearFields()
+
 }
 
 function checkRange(value){
